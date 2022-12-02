@@ -1,23 +1,90 @@
 import './App.css'
 
-import { useState } from 'react';
+import { useLocation, useNavigate, NavLink, Routes, Route, Navigate } from "react-router-dom"
+
+import HomeView from './components/views/HomeView'
+import AboutView from './components/views/AboutView'
+
+import { useEffect, useState } from 'react'
 
 function App() {
 
-  const [section, setSection] = useState(0)
+  const Sections = {
+    About: {
+      id: 0,
+      name: 'About',
+      path: '/about',
+      viewComponent: <AboutView />
+    },
+    PortfolioPage: {
+      id: 1,
+      name: 'Portfolio page',
+      path: '/portfolio',
+      viewComponent: <HomeView />
+    },
+    ForBuisnesses: {
+      id: 2,
+      name: 'For buisnesses',
+      path: '/search',
+      viewComponent: <HomeView />
+    },
+    ForCreatives: {
+      id: 3,
+      name: 'For creatives',
+      path: '/signup',
+      viewComponent: <HomeView />
+    },
+    Home: {
+      id: 4,
+      name: 'Home',
+      path: '/home',
+      viewComponent: <HomeView />
+    }
+  }
+
+
+  const [section, setSection] = useState('')
+  let location = useLocation()
+  let navigate = useNavigate()
+
+
+  useEffect(() => {
+    for(var key of Object.keys(Sections)) {
+      if (location.pathname == Sections[key].path) {
+        setSection(key)
+      }
+    }
+  }, [location])
+  
 
   return (
-    <div>
+    <div className='app'>
 
+      {/* header */}
       <div className='header'>
         <h1 className='header-title'>Creative Book Northumberland</h1>
         <div className='header-sections'>
-          <div className={section==0 ? 'selected' : ''} onClick={() => {setSection(0)}}>About</div>
-          <div className={section==1 ? 'selected' : ''} onClick={() => {setSection(1)}}>Portfolio page</div>
-          <div className={section==2 ? 'selected' : ''} onClick={() => {setSection(2)}}>For buisnesses</div>
-          <div className={section==3 ? 'selected' : ''} onClick={() => {setSection(3)}}>For creatives</div>
-          <div className={section==4 ? 'selected' : ''} onClick={() => {setSection(4)}}>Home</div>
+          {Object.keys(Sections).map((key) => (
+            <NavLink key={Sections[key].id} to={Sections[key].path}>
+              <div className={section==key ? 'selected' : ''} onClick={() => {setSection(key)}}>{Sections[key].name}</div>
+            </NavLink>
+          ))}
         </div>
+      </div>
+      
+      {/* body of app where views will be displayed */}
+      <div className='view-container'>
+        <Routes>
+          
+          {/* Sepcify route for each section */}
+          {Object.keys(Sections).map((key) => (
+            <Route path={Sections[key].path} element={Sections[key].viewComponent} />
+          ))}
+
+          {/* Add catch all route */}
+          <Route path='*' element={<Navigate to="/home" />} />
+
+        </Routes>
       </div>
       
     </div>

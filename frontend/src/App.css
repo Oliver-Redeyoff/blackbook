@@ -1,7 +1,14 @@
+.app {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
 .header {
   --title-width: 400px;
   --horizontal-margin: 100px;
-  position: fixed;
+  flex: 0 1 auto;
+  position: relative;
   top: 0px;
   left: 0px;
   width: 100vw;
@@ -32,6 +39,7 @@
   margin-left: 20px;
   transition: all 0.3s;
   cursor: pointer;
+  color: black;
 }
 .header-sections div:hover {
   background-color: #0000001b;
@@ -39,4 +47,12 @@
 .header-sections div.selected {
   background-color: black;
   color: white;
+}
+
+.view-container {
+  flex: 1 1 auto;
+  margin: auto;
+  padding: 40px;
+  width: 80%;
+  max-width: 1000px;
 }
