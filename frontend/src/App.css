@@ -26,7 +26,17 @@
   top: 50%;
   transform: translateY(-50%);
 }
-.header-sections button {
+.header-sections div {
   float: right;
+  padding: 8px 10px;
   margin-left: 20px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.header-sections div:hover {
+  background-color: #0000001b;
+}
+.header-sections div.selected {
+  background-color: black;
+  color: white;
 }

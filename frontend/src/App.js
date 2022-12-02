@@ -1,6 +1,5 @@
 import './App.css'
 
-import Button from '@mui/material/Button';
 import { useState } from 'react';
 
 function App() {
@@ -13,11 +12,11 @@ function App() {
       <div className='header'>
         <h1 className='header-title'>Creative Book Northumberland</h1>
         <div className='header-sections'>
-          <Button variant={section==0 ? 'contained' : 'text'} onClick={() => {setSection(0)}}>About</Button>
-          <Button variant={section==1 ? 'contained' : 'text'} onClick={() => {setSection(1)}}>Portfolio page</Button>
-          <Button variant={section==2 ? 'contained' : 'text'} onClick={() => {setSection(2)}}>For buisnesses</Button>
-          <Button variant={section==3 ? 'contained' : 'text'} onClick={() => {setSection(3)}}>For creatives</Button>
-          <Button variant={section==4 ? 'contained' : 'text'} onClick={() => {setSection(4)}}>Home</Button>
+          <div className={section==0 ? 'selected' : ''} onClick={() => {setSection(0)}}>About</div>
+          <div className={section==1 ? 'selected' : ''} onClick={() => {setSection(1)}}>Portfolio page</div>
+          <div className={section==2 ? 'selected' : ''} onClick={() => {setSection(2)}}>For buisnesses</div>
+          <div className={section==3 ? 'selected' : ''} onClick={() => {setSection(3)}}>For creatives</div>
+          <div className={section==4 ? 'selected' : ''} onClick={() => {setSection(4)}}>Home</div>
         </div>
       </div>
       
