@@ -1,4 +1,4 @@
-import '../../css/HomeView.css'
+import '../css/HomeView.css'
 
 import { useEffect, useState } from 'react';
 

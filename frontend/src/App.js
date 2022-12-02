@@ -2,8 +2,10 @@ import './App.css'
 
 import { useLocation, useNavigate, NavLink, Routes, Route, Navigate } from "react-router-dom"
 
-import HomeView from './components/views/HomeView'
-import AboutView from './components/views/AboutView'
+import HomeView from './components/HomeView'
+import PortfolioForm from './components/PorfolioForm'
+import SearchView from './components/SearchView'
+import AboutView from './components/AboutView'
 
 import { useEffect, useState } from 'react'
 
@@ -16,23 +18,17 @@ function App() {
       path: '/about',
       viewComponent: <AboutView />
     },
-    PortfolioPage: {
-      id: 1,
-      name: 'Portfolio page',
-      path: '/portfolio',
-      viewComponent: <HomeView />
-    },
     ForBuisnesses: {
       id: 2,
       name: 'For buisnesses',
       path: '/search',
-      viewComponent: <HomeView />
+      viewComponent: <SearchView />
     },
     ForCreatives: {
       id: 3,
       name: 'For creatives',
       path: '/signup',
-      viewComponent: <HomeView />
+      viewComponent: <PortfolioForm />
     },
     Home: {
       id: 4,

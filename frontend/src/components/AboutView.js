@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 
-function HomeView() {
+function AboutView() {
 
   return (
     <div>
-
-      hello there 2
-      
+      Put about content here
     </div>
   )
 
 }
 
-export default HomeView;
+export default AboutView;
