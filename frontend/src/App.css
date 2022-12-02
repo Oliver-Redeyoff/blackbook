@@ -1,8 +1,32 @@
 .header {
+  --title-width: 400px;
+  --horizontal-margin: 100px;
   position: fixed;
   top: 0px;
   left: 0px;
   width: 100vw;
   height: 75px;
-  border: 1px solid red;
+  box-shadow: 0px 0px 4px 2px #0000001b;
+}
+
+.header-title {
+  position: absolute;
+  width: var(--title-width);
+  top: 50%;
+  left: var(--horizontal-margin);
+  transform: translateY(-50%);
+  margin: 0px;
+  font-size: 18px;
+}
+
+.header-sections {
+  position: absolute;
+  left: calc(var(--horizontal-margin) + var(--title-width));
+  right: var(--horizontal-margin);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.header-sections button {
+  float: right;
+  margin-left: 20px;
 }
