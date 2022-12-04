@@ -1,15 +1,21 @@
 import '../css/PortfolioForm.css'
 
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Radio from '@mui/material/Radio'
+import Button from '@mui/material/Button'
 
 import { useEffect, useState } from 'react'
+import { Fab } from '@mui/material'
 
 function PortfolioForm() {
 
+  const DefaultServices = ['Graphic Design', 'Photography', 'Illustration', 'Copywriting', 'Social media', 'Music', 'Website design', 
+                    'Website building', 'Legal advice', 'Financial advice']
+
+
   return (
-    <div className='form'>
+    <div>
 
       <h2>Basic info</h2>
       <Grid container spacing={2}>
@@ -57,9 +63,11 @@ function PortfolioForm() {
             <Grid item xs={4}></Grid>
             <Grid item xs={4}>Primary</Grid>
             <Grid item xs={4}>Secondary</Grid>
-            <Grid item xs={4}>Design</Grid>
-            <Grid item xs={4}><Radio /></Grid>
-            <Grid item xs={4}><Radio /></Grid>
+            {DefaultServices.map((service) => (<>
+              <Grid item xs={4}>{service}</Grid>
+              <Grid item xs={4}><Radio /></Grid>
+              <Grid item xs={4}><Radio /></Grid>
+            </>))}
           </Grid>
         </Grid>
         <Grid item xs={12}>
@@ -87,9 +95,11 @@ function PortfolioForm() {
         </Grid>
       </Grid>
 
+      <Button style={{'marginTop': '20px'}} variant='contained' disableElevation>Submit</Button>
+
     </div>
   )
 
 }
 
-export default PortfolioForm;
+export default PortfolioForm

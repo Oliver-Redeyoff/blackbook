@@ -50,9 +50,12 @@
 }
 
 .view-container {
-  flex: 1 1 auto;
-  margin: auto;
-  padding: 40px;
+  position: absolute;
+  top: 75px;
+  height: calc(100% - 75PX);
+  left: 50%;
+  transform: translateX(-50%);
   width: 80%;
   max-width: 1000px;
+  overflow: auto;
 }
