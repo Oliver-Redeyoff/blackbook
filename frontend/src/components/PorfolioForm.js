@@ -11,35 +11,31 @@ import formValidator from '../services/formValidator'
 
 function PortfolioForm() {
 
-  const DefaultServices = ['Graphic Design', 'Photography', 'Illustration', 
-                          'Copywriting', 'Social media', 'Music', 'Website design', 
-                          'Website building', 'Legal advice', 'Financial advice']
-
   var formSchema = new formValidator({
     Name: {
       label: 'Name',
       initialValue: '',
-      validation: notEmpty()
+      validation: () => {notEmpty()}
     },
     Email: {
       label: 'Email',
       initialValue: '',
-      validation: notEmpty()
+      validation: () => {notEmpty()}
     },
     CompanyName: {
       label: 'Company name',
       initialValue: '',
-      validation: notEmpty()
+      validation: () => {notEmpty()}
     },
     Number: {
       label: 'Number',
       initialValue: '',
-      validation: notEmpty()
+      validation: () => {notEmpty()}
     },
     Address: {
       label: 'Address',
       initialValue: '',
-      validation: notEmpty()
+      validation: () => {notEmpty()}
     },
     Website: {
       label: 'Website',
@@ -60,10 +56,25 @@ function PortfolioForm() {
     Linkedin: {
       label: 'Linkedin',
       initialValue: ''
+    },
+    BusinessDescriptionQuestion: {
+      label: 'Buisness description',
+      initialValue: '',
+      validation: (value) => {return value.length <= 1500}
+    },
+    PreviousWorkQuestion: {
+      label: 'Previous work',
+      initialValue: '',
+      validation: (value) => {return value.length <= 1500}
     }
   })
 
   const [portfolioForm, setPortfolioForm] = useState(formSchema.generateInitialForm())
+  const [services, setServices] = useState([
+    'Graphic Design', 'Photography', 'Illustration', 
+    'Copywriting', 'Social media', 'Music', 'Website design', 
+    'Website building', 'Legal advice', 'Financial advice'
+  ])
 
   function notEmpty(input) {
     if (input == '' || input == [] || input == null) {
@@ -86,7 +97,8 @@ function PortfolioForm() {
     }
 
     if (formElement.isValid != false) {
-      return <TextField 
+      return <TextField
+                value={formElement.value}
                 error={formElement.isValid==false} 
                 id="outlined-basic" 
                 fullWidth 
@@ -147,14 +159,22 @@ function PortfolioForm() {
         <Grid item xs={12}>
           <h3>Services offered</h3>
           <Grid container spacing={2}>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}>Primary</Grid>
-            <Grid item xs={4}>Secondary</Grid>
-            {DefaultServices.map((service) => (<>
-              <Grid item xs={4}>{service}</Grid>
-              <Grid item xs={4}><Radio /></Grid>
-              <Grid item xs={4}><Radio /></Grid>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={3}>Primary</Grid>
+            <Grid item xs={3}>Secondary</Grid>
+            <Grid item xs={3}></Grid>
+
+            {services.map((service) => (<>
+              <Grid item xs={3}>{service}</Grid>
+              <Grid item xs={3}><Radio /></Grid>
+              <Grid item xs={3}><Radio /></Grid>
+              <Grid item xs={3}></Grid>
             </>))}
+
+            <Grid item xs={3}><TextField id="outlined-basic" fullWidth size='small' label="" /></Grid>
+            <Grid item xs={3}><Radio /></Grid>
+            <Grid item xs={3}><Radio /></Grid>
+            <Grid item xs={3}><Button variant='contained'>Add</Button></Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
@@ -166,12 +186,12 @@ function PortfolioForm() {
       <h2>Buisness info</h2>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <h3>Tell us about yourself and your business (no more than 300 words)</h3>
-          <TextField id="outlined-basic" fullWidth multiline rows={4} label="" />
+          <h3>Tell us about yourself and your business (no more than 1500 characters)</h3>
+          {generateTextInput('BusinessDescriptionQuestion', true)}
         </Grid>
         <Grid item xs={12}>
-          <h3>Please let us know who you've previously worked with or what types of businesses you've worked with (if relevant)</h3>
-          <TextField id="outlined-basic" fullWidth multiline rows={4} label="" />
+          <h3>Please let us know who you've previously worked with or what types of businesses you've worked with (no more than 1500 characters)</h3>
+          {generateTextInput('PreviousWorkQuestion', true)}
         </Grid>
       </Grid>
 
