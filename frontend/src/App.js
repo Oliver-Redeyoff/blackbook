@@ -74,7 +74,7 @@ function App() {
           
           {/* Sepcify route for each section */}
           {Object.keys(Sections).map((key) => (
-            <Route path={Sections[key].path} element={Sections[key].viewComponent} />
+            <Route path={Sections[key].path} element={<div className='view'>{Sections[key].viewComponent}</div>} />
           ))}
 
           {/* Add catch all route */}
