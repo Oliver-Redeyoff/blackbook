@@ -6,13 +6,100 @@ import Radio from '@mui/material/Radio'
 import Button from '@mui/material/Button'
 
 import { useEffect, useState } from 'react'
-import { Fab } from '@mui/material'
+
+import formValidator from '../services/formValidator'
 
 function PortfolioForm() {
 
-  const DefaultServices = ['Graphic Design', 'Photography', 'Illustration', 'Copywriting', 'Social media', 'Music', 'Website design', 
-                    'Website building', 'Legal advice', 'Financial advice']
+  const DefaultServices = ['Graphic Design', 'Photography', 'Illustration', 
+                          'Copywriting', 'Social media', 'Music', 'Website design', 
+                          'Website building', 'Legal advice', 'Financial advice']
 
+  var formSchema = new formValidator({
+    Name: {
+      label: 'Name',
+      initialValue: '',
+      validation: notEmpty()
+    },
+    Email: {
+      label: 'Email',
+      initialValue: '',
+      validation: notEmpty()
+    },
+    CompanyName: {
+      label: 'Company name',
+      initialValue: '',
+      validation: notEmpty()
+    },
+    Number: {
+      label: 'Number',
+      initialValue: '',
+      validation: notEmpty()
+    },
+    Address: {
+      label: 'Address',
+      initialValue: '',
+      validation: notEmpty()
+    },
+    Website: {
+      label: 'Website',
+      initialValue: ''
+    },
+    Facebook: {
+      label: 'Facebook',
+      initialValue: ''
+    },
+    Twitter: {
+      label: 'Twitter',
+      initialValue: ''
+    },
+    Instagram: {
+      label: 'Instagram',
+      initialValue: ''
+    },
+    Linkedin: {
+      label: 'Linkedin',
+      initialValue: ''
+    }
+  })
+
+  const [portfolioForm, setPortfolioForm] = useState(formSchema.generateInitialForm())
+
+  function notEmpty(input) {
+    if (input == '' || input == [] || input == null) {
+      return false
+    }
+    return true
+  }
+
+  function generateTextInput(formElementKey, useMultiline=false) {
+    var formElement = portfolioForm[formElementKey]
+    if (!formElement) {
+      return
+    }
+
+    function updateValue(e) {
+      var newValue = e.target.value
+      var portfolioFormCopy = {...portfolioForm}
+      portfolioFormCopy[formElementKey].value = newValue
+      setPortfolioForm(portfolioFormCopy)
+    }
+
+    if (formElement.isValid != false) {
+      return <TextField 
+                error={formElement.isValid==false} 
+                id="outlined-basic" 
+                fullWidth 
+                label={formElement.label} 
+                onChange={(e) => {updateValue(e)}}
+                multiline={useMultiline}
+                rows={4}
+                helperText={formElement.isValid==false ? 'Input is invalid' : ''} />
+    } else {
+      return <TextField error id="outlined-basic" fullWidth label={formElement.label} onChange={(e) => {updateValue(e)}}
+              helperText={formElement.label + ' value is not valid'} />
+    }
+  }
 
   return (
     <div>
@@ -20,38 +107,38 @@ function PortfolioForm() {
       <h2>Basic info</h2>
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Name" />
+          {generateTextInput('Name')}
         </Grid>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Email" />
+          {generateTextInput('Email')}
         </Grid>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Name of company" />
+          {generateTextInput('CompanyName')}
         </Grid>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Number" />
+          {generateTextInput('Number')}
         </Grid>
         <Grid item xs={12}>
-          <TextField id="outlined-basic" fullWidth multiline rows={4} label="Address" />
+          {generateTextInput('Address', true)}
         </Grid>
       </Grid>
 
       <h2>Social links</h2>
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Website" />
+          {generateTextInput('Website')}
         </Grid>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Facebook" />
+          {generateTextInput('Facebook')}
         </Grid>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Twitter" />
+          {generateTextInput('Twitter')}
         </Grid>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Instagram" />
+          {generateTextInput('Instagram')}
         </Grid>
         <Grid item xs={6}>
-          <TextField id="outlined-basic" fullWidth label="Linkedin" />
+          {generateTextInput('Linkedin')}
         </Grid>
       </Grid>
 
