@@ -8,6 +8,7 @@ import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
 
 import formValidator from '../services/formValidator'
+import api from '../services/api'
 
 function PortfolioForm() {
 
@@ -144,7 +145,13 @@ function PortfolioForm() {
   function submit() {
     var [formValid, portfolioFormCopy] = formSchema.validate(portfolioForm)
     setPortfolioForm(portfolioFormCopy)
-    console.log(portfolioFormCopy)
+    
+    if (formValid == false) {
+      return
+    }
+
+    var portfolioDict = formSchema.generateValuesDict(portfolioFormCopy)
+    api.postPortfolio(portfolioDict)
   }
 
 

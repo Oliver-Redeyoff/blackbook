@@ -20,6 +20,14 @@ class formValidator {
         return form
     }
 
+    generateValuesDict(form) {
+        var valuesDict = {}
+        for (var key in form) {
+            valuesDict[key] = form[key].value
+        }
+        return valuesDict
+    }
+
     validate(form) {
         var resForm = {...form}
 
