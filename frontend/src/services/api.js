@@ -11,6 +11,6 @@ function post(endpoint, data) {
 }
 
 export default {
-    getAllPortfolios: () => {get('GetPortfolios')},
-    postPortfolio: (portfolio) => {post('PostPortfolio', portfolio)}
+    getAllPortfolios: () => {return get('GetPortfolios')},
+    postPortfolio: (portfolio) => {return post('PostPortfolio', portfolio)}
 }

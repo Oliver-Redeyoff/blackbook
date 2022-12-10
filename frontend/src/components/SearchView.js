@@ -4,14 +4,22 @@ import api from '../services/api'
 
 function SearchView() {
 
+  const [portfolios, setPortfolios] = useState([])
+
   useEffect(() => {
-    api.getAllPortfolios({test: 'testing'})
+    api.getAllPortfolios()
+      .then((res) => {
+        console.log(res)
+        setPortfolios(res.data.res)
+      })
   }, [])
 
 
   return (
     <div>
-      Put search content here
+      {portfolios.map((portfolio) => (
+        <div>{portfolio.CompanyName}</div>
+      ))}
     </div>
   )
 
