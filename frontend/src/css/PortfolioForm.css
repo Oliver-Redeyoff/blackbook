@@ -1,3 +1,10 @@
+h2 {
+    margin-top: 70px;
+}
+h2:nth-of-type(1) {
+    margin-top: 10px;
+}
+
 h3 {
     font-size: 16px;
     font-weight: 500;

@@ -11,31 +11,40 @@ import formValidator from '../services/formValidator'
 
 function PortfolioForm() {
 
+  const ServiceLevels = {
+    Primary: 'Primary',
+    Secondary: 'Secondary'
+  }
   var formSchema = new formValidator({
     Name: {
       label: 'Name',
       initialValue: '',
-      validation: () => {notEmpty()}
+      validation: notEmpty,
+      errorMessage: 'Cannot be empty'
     },
     Email: {
       label: 'Email',
       initialValue: '',
-      validation: () => {notEmpty()}
+      validation: notEmpty,
+      errorMessage: 'Cannot be empty'
     },
     CompanyName: {
       label: 'Company name',
       initialValue: '',
-      validation: () => {notEmpty()}
+      validation: notEmpty,
+      errorMessage: 'Cannot be empty'
     },
     Number: {
       label: 'Number',
       initialValue: '',
-      validation: () => {notEmpty()}
+      validation: notEmpty,
+      errorMessage: 'Cannot be empty'
     },
     Address: {
       label: 'Address',
       initialValue: '',
-      validation: () => {notEmpty()}
+      validation: notEmpty,
+      errorMessage: 'Cannot be empty'
     },
     Website: {
       label: 'Website',
@@ -57,15 +66,23 @@ function PortfolioForm() {
       label: 'Linkedin',
       initialValue: ''
     },
+    Services: {
+      label: 'Services',
+      initialValue: {},
+      validation: notEmpty,
+      errorMessage: 'Cannot be empy'
+    },
     BusinessDescriptionQuestion: {
       label: 'Buisness description',
       initialValue: '',
-      validation: (value) => {return value.length <= 1500}
+      validation: (value) => {return value.length <= 1500},
+      errorMessage: 'Cannot be more than 1500 characters'
     },
     PreviousWorkQuestion: {
       label: 'Previous work',
       initialValue: '',
-      validation: (value) => {return value.length <= 1500}
+      validation: (value) => {return value.length <= 1500},
+      errorMessage: 'Cannot be more than 1500 characters'
     }
   })
 
@@ -75,9 +92,10 @@ function PortfolioForm() {
     'Copywriting', 'Social media', 'Music', 'Website design', 
     'Website building', 'Legal advice', 'Financial advice'
   ])
+  const [newService, setNewService] = useState('')
 
   function notEmpty(input) {
-    if (input == '' || input == [] || input == null) {
+    if (input == '' || input == [] || input == null || Object.keys(input).length == 0) {
       return false
     }
     return true
@@ -96,22 +114,39 @@ function PortfolioForm() {
       setPortfolioForm(portfolioFormCopy)
     }
 
-    if (formElement.isValid != false) {
-      return <TextField
-                value={formElement.value}
-                error={formElement.isValid==false} 
-                id="outlined-basic" 
-                fullWidth 
-                label={formElement.label} 
-                onChange={(e) => {updateValue(e)}}
-                multiline={useMultiline}
-                rows={4}
-                helperText={formElement.isValid==false ? 'Input is invalid' : ''} />
-    } else {
-      return <TextField error id="outlined-basic" fullWidth label={formElement.label} onChange={(e) => {updateValue(e)}}
-              helperText={formElement.label + ' value is not valid'} />
-    }
+    return <TextField
+              value={formElement.value}
+              error={formElement.isValid==false} 
+              id="outlined-basic" 
+              fullWidth 
+              label={formElement.label} 
+              onChange={(e) => {updateValue(e)}}
+              multiline={useMultiline}
+              rows={4}
+              helperText={formElement.isValid==false ? formElement.errorMessage : ''} />
   }
+
+  function updateService(service, level) {
+    var portfolioFormCopy = {...portfolioForm}
+    portfolioFormCopy.Services.value[service] = level
+    console.log(portfolioFormCopy)
+    setPortfolioForm(portfolioFormCopy)
+  }
+
+  function addNewService() {
+    if (newService == '') {
+      return
+    }
+    setServices([...services, newService])
+    setNewService('')
+  }
+
+  function submit() {
+    var [formValid, portfolioFormCopy] = formSchema.validate(portfolioForm)
+    setPortfolioForm(portfolioFormCopy)
+    console.log(portfolioFormCopy)
+  }
+
 
   return (
     <div>
@@ -156,31 +191,24 @@ function PortfolioForm() {
 
       <h2>Services</h2>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <h3>Services offered</h3>
-          <Grid container spacing={2}>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={3}>Primary</Grid>
-            <Grid item xs={3}>Secondary</Grid>
-            <Grid item xs={3}></Grid>
 
-            {services.map((service) => (<>
-              <Grid item xs={3}>{service}</Grid>
-              <Grid item xs={3}><Radio /></Grid>
-              <Grid item xs={3}><Radio /></Grid>
-              <Grid item xs={3}></Grid>
-            </>))}
+        <Grid item xs={4}></Grid>
+        <Grid item xs={4}>Primary</Grid>
+        <Grid item xs={4}>Secondary</Grid>
 
-            <Grid item xs={3}><TextField id="outlined-basic" fullWidth size='small' label="" /></Grid>
-            <Grid item xs={3}><Radio /></Grid>
-            <Grid item xs={3}><Radio /></Grid>
-            <Grid item xs={3}><Button variant='contained'>Add</Button></Grid>
-          </Grid>
-        </Grid>
+        {services.map((service) => (<>
+          <Grid item xs={4}>{service}</Grid>
+          <Grid item xs={4}><Radio checked={portfolioForm.Services.value[service] == ServiceLevels.Primary} onClick={() => {updateService(service, ServiceLevels.Primary)}} /></Grid>
+          <Grid item xs={4}><Radio checked={portfolioForm.Services.value[service] == ServiceLevels.Secondary} onClick={() => {updateService(service, ServiceLevels.Secondary)}}/></Grid>
+        </>))}
+        
+        <Grid item xs={12}></Grid>
         <Grid item xs={12}>
-          <h3>Please specify any other services</h3>
-          <TextField id="outlined-basic" fullWidth multiline rows={4} label="" />
+          <span><b>Add a service:</b></span>
+          <TextField value={newService} id="outlined-basic" style={{'margin': '0px 20px 0px 20px'}} size='small' onChange={(e) => {setNewService(e.target.value)}} />
+          <Button variant='contained' onClick={addNewService}>Add</Button>
         </Grid>
+
       </Grid>
 
       <h2>Buisness info</h2>
@@ -202,7 +230,7 @@ function PortfolioForm() {
         </Grid>
       </Grid>
 
-      <Button style={{'marginTop': '20px'}} variant='contained' disableElevation>Submit</Button>
+      <Button style={{'marginTop': '60px'}} variant='contained' onClick={submit} disableElevation>Submit</Button>
 
     </div>
   )

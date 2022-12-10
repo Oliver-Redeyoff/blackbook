@@ -13,16 +13,17 @@ class formValidator {
         for (var key in this.schema) {
             form[key] = {
                 label: this.schema[key].label,
-                value: this.schema[key].initialValue
+                value: this.schema[key].initialValue,
+                errorMessage: this.schema[key].errorMessage
             }
         }
         return form
     }
 
     validate(form) {
-        resForm = {...form}
+        var resForm = {...form}
 
-        formIsValid = true
+        var formIsValid = true
         for (var key in resForm) {
 
             if (this.schema.hasOwnProperty(key) == false) {
@@ -31,19 +32,19 @@ class formValidator {
             }
 
             else if (this.schema[key].hasOwnProperty('validation')) {
-                resForm[key].isValid = resForm[key].validate(resForm[key].value)
+                resForm[key].isValid = this.schema[key].validation(resForm[key].value)
                 if (resForm[key].isValid == false) {
                     formIsValid = false
                 }
             }
             
             else {
-                resForm[key].isValid = True
+                resForm[key].isValid = true
             }
 
         }
 
-        return resForm
+        return [formIsValid, resForm]
     }
 
 }
