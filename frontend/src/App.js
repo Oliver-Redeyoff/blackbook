@@ -13,22 +13,22 @@ function App() {
 
   const Sections = {
     About: {
-      id: 0,
+      id: 1,
       name: 'About',
       path: '/about',
       viewComponent: <AboutView />
     },
-    ForBuisnesses: {
-      id: 2,
-      name: 'For buisnesses',
-      path: '/search',
-      viewComponent: <SearchView />
-    },
     ForCreatives: {
-      id: 3,
-      name: 'For creatives',
+      id: 2,
+      name: 'Sign up',
       path: '/signup',
       viewComponent: <PortfolioForm />
+    },
+    ForBuisnesses: {
+      id: 3,
+      name: 'Find creative',
+      path: '/search',
+      viewComponent: <SearchView />
     },
     Home: {
       id: 4,
