@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/blackbook/static/css/main.35179324.css",
+    "main.js": "/blackbook/static/js/main.509f6261.js",
+    "static/js/787.cda612ba.chunk.js": "/blackbook/static/js/787.cda612ba.chunk.js",
+    "index.html": "/blackbook/index.html",
+    "main.35179324.css.map": "/blackbook/static/css/main.35179324.css.map",
+    "main.509f6261.js.map": "/blackbook/static/js/main.509f6261.js.map",
+    "787.cda612ba.chunk.js.map": "/blackbook/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35179324.css",
+    "static/js/main.509f6261.js"
+  ]
+}
