@@ -1,8 +1,14 @@
+@keyframes appear {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
 .portfolio {
     background-color: rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
+    animation: 0.4s 1 forwards appear;
 }
 
 .portfolio .name {

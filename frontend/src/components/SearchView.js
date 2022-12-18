@@ -1,5 +1,7 @@
 import '../css/SearchView.css'
 
+import Loader from './Loader'
+
 import { useEffect, useState } from 'react'
 
 import api from '../services/api'
@@ -7,6 +9,7 @@ import api from '../services/api'
 function SearchView() {
 
   const [portfolios, setPortfolios] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     api.getAllPortfolios()
@@ -30,6 +33,7 @@ function SearchView() {
         }
 
         setPortfolios(portfolios)
+        setLoading(false)
       })
   }, [])
 
@@ -37,6 +41,9 @@ function SearchView() {
   return (
     <div>
       <h1>All creatives:</h1>
+
+      { loading==true && <div style={{'textAlign': 'center'}}><Loader /></div> }
+
       {portfolios.map((portfolio) => (
         <div className='portfolio'>
           <div className='name'>{portfolio.CompanyName}</div>
@@ -50,6 +57,7 @@ function SearchView() {
           </div>
         </div>
       ))}
+
     </div>
   )
 
