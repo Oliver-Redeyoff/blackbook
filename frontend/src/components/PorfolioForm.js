@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField'
 import Radio from '@mui/material/Radio'
 import Button from '@mui/material/Button'
 
+import Loader from './Loader'
+
 import { useEffect, useState } from 'react'
 
 import formValidator from '../services/formValidator'
@@ -87,6 +89,7 @@ function PortfolioForm() {
     }
   })
 
+
   const [portfolioForm, setPortfolioForm] = useState(formSchema.generateInitialForm())
   const [services, setServices] = useState([
     'Graphic Design', 'Photography', 'Illustration', 
@@ -94,6 +97,9 @@ function PortfolioForm() {
     'Website building', 'Legal advice', 'Financial advice'
   ])
   const [newService, setNewService] = useState('')
+  const [submitLoading, setSubmitLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
 
   function notEmpty(input) {
     if (input == '' || input == [] || input == null || Object.keys(input).length == 0) {
@@ -143,6 +149,8 @@ function PortfolioForm() {
   }
 
   function submit() {
+    setSubmitLoading(true)
+
     var [formValid, portfolioFormCopy] = formSchema.validate(portfolioForm)
     setPortfolioForm(portfolioFormCopy)
     
@@ -152,6 +160,10 @@ function PortfolioForm() {
 
     var portfolioDict = formSchema.generateValuesDict(portfolioFormCopy)
     api.postPortfolio(portfolioDict)
+      .finally(() => {
+        setSubmitLoading(false)
+        setSubmitted(true)
+      })
   }
 
 
@@ -239,7 +251,11 @@ function PortfolioForm() {
         </Grid>
       </Grid>
 
-      <Button style={{'marginTop': '60px'}} variant='contained' onClick={submit} disableElevation>Submit</Button>
+      <Button style={{'marginTop': '60px'}} variant='contained' disabled={submitted || submitLoading} onClick={submit} disableElevation>
+        { submitLoading==true ? <Loader color='white' /> : (
+          submitted==true ? 'Submitted!' : 'Submit'
+        ) }
+      </Button>
 
     </div>
   )

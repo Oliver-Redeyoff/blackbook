@@ -1,12 +1,12 @@
 import '../css/Loader.css'
 
-function Loader() {
+function Loader(props) {
 
   return (
     <div className='loader'>
-        <div className='dot' />
-        <div className='dot' />
-        <div className='dot' />
+        <div className='dot' style={{'backgroundColor': props.color ?? 'black'}} />
+        <div className='dot' style={{'backgroundColor': props.color ?? 'black'}} />
+        <div className='dot' style={{'backgroundColor': props.color ?? 'black'}} />
     </div>
   )
 
