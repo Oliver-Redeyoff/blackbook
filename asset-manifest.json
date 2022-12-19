@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/blackbook/static/css/main.35179324.css",
-    "main.js": "/blackbook/static/js/main.509f6261.js",
-    "static/js/787.cda612ba.chunk.js": "/blackbook/static/js/787.cda612ba.chunk.js",
-    "index.html": "/blackbook/index.html",
-    "main.35179324.css.map": "/blackbook/static/css/main.35179324.css.map",
-    "main.509f6261.js.map": "/blackbook/static/js/main.509f6261.js.map",
-    "787.cda612ba.chunk.js.map": "/blackbook/static/js/787.cda612ba.chunk.js.map"
+    "main.css": "/static/css/main.1337128e.css",
+    "main.js": "/static/js/main.15195de9.js",
+    "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "index.html": "/index.html",
+    "main.1337128e.css.map": "/static/css/main.1337128e.css.map",
+    "main.15195de9.js.map": "/static/js/main.15195de9.js.map",
+    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.35179324.css",
-    "static/js/main.509f6261.js"
+    "static/css/main.1337128e.css",
+    "static/js/main.15195de9.js"
   ]
 }
