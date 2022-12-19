@@ -42,7 +42,7 @@ function SearchView() {
     <div>
       <h1>All creatives:</h1>
 
-      { loading==true && <div style={{'textAlign': 'center'}}><Loader /></div> }
+      { loading==true && <div style={{'textAlign': 'center', 'marginTop': '10%'}}><Loader /></div> }
 
       {portfolios.map((portfolio) => (
         <div className='portfolio'>
