@@ -24,7 +24,7 @@ function App() {
       path: '/signup',
       viewComponent: <PortfolioForm />
     },
-    ForBuisnesses: {
+    ForBusinesses: {
       id: 3,
       name: 'Find creative',
       path: '/search',

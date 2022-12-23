@@ -76,7 +76,7 @@ function PortfolioForm() {
       errorMessage: 'Cannot be empy'
     },
     BusinessDescriptionQuestion: {
-      label: 'Buisness description',
+      label: 'Business description',
       initialValue: '',
       validation: (value) => {return value.length <= 1500},
       errorMessage: 'Cannot be more than 1500 characters'
@@ -170,7 +170,7 @@ function PortfolioForm() {
   return (
     <div>
 
-      <h1>Sign up to have your creative buisness listed</h1>
+      <h1>Sign up to have your creative business listed</h1>
 
       <h2>Basic info</h2>
       <Grid container spacing={2}>
@@ -232,7 +232,7 @@ function PortfolioForm() {
 
       </Grid>
 
-      <h2>Buisness info</h2>
+      <h2>Business info</h2>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <h3>Tell us about yourself and your business (no more than 1500 characters)</h3>
