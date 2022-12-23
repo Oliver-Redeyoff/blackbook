@@ -1,5 +1,6 @@
 import '../css/SearchView.css'
 
+import { NavLink } from "react-router-dom"
 import Loader from './Loader'
 
 import { useEffect, useState } from 'react'
@@ -40,22 +41,25 @@ function SearchView() {
 
   return (
     <div>
+
       <h1>All creatives:</h1>
 
       { loading==true && <div style={{'textAlign': 'center', 'marginTop': '10%'}}><Loader /></div> }
 
       {portfolios.map((portfolio) => (
-        <div className='portfolio'>
-          <div className='name'>{portfolio.CompanyName}</div>
-          <div className='primary-services'>
-            <label>Primary services: </label>
-            {portfolio.PrimaryServices.map((service) => (<span>{service}</span>))}
+        <NavLink key={portfolio.CompanyName} to={'/search/'+portfolio.CompanyName}>
+          <div className='portfolio'>
+            <div className='name'>{portfolio.CompanyName}</div>
+            <div className='primary-services'>
+              <label>Primary services: </label>
+              {portfolio.PrimaryServices.map((service) => (<span>{service}</span>))}
+            </div>
+            <div className='secondary-services'>
+              <label>Secondary services: </label>
+              {portfolio.SecondaryServices.map((service) => (<span>{service}</span>))}
+            </div>
           </div>
-          <div className='secondary-services'>
-            <label>Secondary services: </label>
-            {portfolio.SecondaryServices.map((service) => (<span>{service}</span>))}
-          </div>
-        </div>
+        </NavLink>
       ))}
 
     </div>

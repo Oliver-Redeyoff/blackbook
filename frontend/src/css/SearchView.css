@@ -3,6 +3,11 @@
     100% {opacity: 1;}
 }
 
+a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
 .portfolio {
     background-color: rgba(0, 0, 0, 0.05);
     padding: 20px;

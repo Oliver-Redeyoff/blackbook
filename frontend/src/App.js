@@ -5,6 +5,7 @@ import { useLocation, useNavigate, NavLink, Routes, Route, Navigate } from "reac
 import HomeView from './components/HomeView'
 import PortfolioForm from './components/PorfolioForm'
 import SearchView from './components/SearchView'
+import PortfolioView from './components/PortfolioView'
 import AboutView from './components/AboutView'
 
 import { useEffect, useState } from 'react'
@@ -76,6 +77,9 @@ function App() {
           {Object.keys(Sections).map((key) => (
             <Route path={Sections[key].path} element={<div className='view'>{Sections[key].viewComponent}</div>} />
           ))}
+
+          {/* Route for specific portfolio */}
+          <Route path='/search/:name' element={<PortfolioView />} />
 
           {/* Add catch all route */}
           <Route path='*' element={<Navigate to="/home" />} />
