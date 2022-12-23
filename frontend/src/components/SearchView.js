@@ -42,13 +42,13 @@ function SearchView() {
   return (
     <div>
 
-      <h1>All creatives:</h1>
+      <h1 className='appear'>All creatives:</h1>
 
       { loading==true && <div style={{'textAlign': 'center', 'marginTop': '10%'}}><Loader /></div> }
 
-      {portfolios.map((portfolio) => (
+      {portfolios.map((portfolio, index) => (
         <NavLink key={portfolio.CompanyName} to={'/search/'+portfolio.CompanyName}>
-          <div className='portfolio'>
+          <div className='portfolio-preview appear' style={{'animationDelay': 0.2 + index*0.03 + 's'}}>
             <div className='name'>{portfolio.CompanyName}</div>
             <div className='primary-services'>
               <label>Primary services: </label>

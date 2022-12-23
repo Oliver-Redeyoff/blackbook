@@ -79,7 +79,7 @@ function App() {
           ))}
 
           {/* Route for specific portfolio */}
-          <Route path='/search/:name' element={<PortfolioView />} />
+          <Route path='/search/:CompanyName' element={<div className='view'><PortfolioView /></div>} />
 
           {/* Add catch all route */}
           <Route path='*' element={<Navigate to="/home" />} />
