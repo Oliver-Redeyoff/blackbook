@@ -18,6 +18,10 @@ body {
   overflow: hidden;
 }
 
+h1 {
+  margin-top: 0px;
+}
+
 
 .app {
   --horizontal-margin: 10%;

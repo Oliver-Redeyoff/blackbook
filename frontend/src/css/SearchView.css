@@ -3,6 +3,10 @@ a {
     color: inherit;
 }
 
+.search-view h1 {
+    margin-bottom: 40px;
+}
+
 .portfolio-preview {
     background-color: rgba(0, 0, 0, 0.05);
     padding: 20px;

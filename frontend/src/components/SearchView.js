@@ -44,7 +44,7 @@ function SearchView() {
 
 
   return (
-    <div>
+    <div className='search-view'>
 
       <h1 className='appear'>All creatives:</h1>
 
