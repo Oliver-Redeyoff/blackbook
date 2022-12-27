@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Radio from '@mui/material/Radio'
 import Button from '@mui/material/Button'
+import Upload from '@mui/icons-material/Upload'
 
 import Loader from './Loader'
 
@@ -168,7 +169,7 @@ function PortfolioForm() {
 
 
   return (
-    <div>
+    <div className='portfolio-form'>
 
       <h1>Sign up to have your creative business listed</h1>
 
@@ -247,7 +248,7 @@ function PortfolioForm() {
       <h2>Work samples</h2>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <div className='form-upload'>Upload any work samples</div>
+          <div className='form-upload icon-text'><Upload /> <span>Upload any work samples</span></div>
         </Grid>
       </Grid>
 

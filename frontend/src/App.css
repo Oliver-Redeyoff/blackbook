@@ -10,6 +10,10 @@
   animation-delay: 0.2s;
 }
 
+.icon-text span{
+  vertical-align: super;
+}
+
 
 .app {
   display: flex;

@@ -1,21 +1,21 @@
-h1 {
+.portfolio-form h1 {
     margin-bottom: 50px;
 }
 
-h2 {
+.portfolio-form h2 {
     margin-top: 70px;
 }
-h2:nth-of-type(1) {
+.portfolio-form h2:nth-of-type(1) {
     margin-top: 10px;
 }
 
-h3 {
+.portfolio-form h3 {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 12px;
 }
 
-.form-upload {
+.portfolio-form .form-upload {
     text-align: center;
     background-color: rgba(0, 0, 0, 0.04);
     color: rgba(0, 0, 0, 0.3);
