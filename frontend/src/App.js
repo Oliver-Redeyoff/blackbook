@@ -2,6 +2,10 @@ import './App.css'
 
 import { useLocation, useNavigate, NavLink, Routes, Route, Navigate } from "react-router-dom"
 
+import Menu from '@mui/icons-material/Menu'
+import Close from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
+
 import HomeView from './components/HomeView'
 import PortfolioForm from './components/PorfolioForm'
 import SearchView from './components/SearchView'
@@ -41,6 +45,7 @@ function App() {
 
 
   const [section, setSection] = useState('')
+  const [showSections, setShowSections] = useState(false)
   let location = useLocation()
   let navigate = useNavigate()
 
@@ -59,14 +64,35 @@ function App() {
 
       {/* header */}
       <div className='header'>
+
         <h1 className='header-title'>Creative Book Northumberland</h1>
-        <div className='header-sections'>
-          {Object.keys(Sections).map((key) => (
-            <NavLink key={Sections[key].id} to={Sections[key].path}>
-              <div className={section==key ? 'selected' : ''} onClick={() => {setSection(key)}}>{Sections[key].name}</div>
-            </NavLink>
-          ))}
+        
+        {/* Button to open the sections overlay */}
+        <div className='open-sections-button'>
+          <IconButton onClick={() => {setShowSections(true)}}>
+            <Menu fontSize="large"/>
+          </IconButton>
         </div>
+
+        <div className={'header-sections' + (showSections==true ? ' open' : ' closed')}>
+          
+          {/* Button for closing the sections overlay */}
+          <div className='close-sections-button'>
+            <IconButton onClick={() => {setShowSections(false)}}>
+              <Close fontSize="large" sx={{ color: 'white' }} />
+            </IconButton>
+          </div>
+
+          {Object.keys(Sections).map((key) => (
+            <div className={'section' + (section==key ? ' selected' : '')}>
+              <NavLink key={Sections[key].id} to={Sections[key].path}>
+                <div onClick={() => {setShowSections(false); setSection(key)}}>{Sections[key].name}</div>
+              </NavLink>
+            </div>
+          ))}
+
+        </div>
+
       </div>
       
       {/* body of app where views will be displayed */}

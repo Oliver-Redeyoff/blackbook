@@ -3,6 +3,9 @@ import '../css/PortfolioView.css'
 import { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
 
+import Box from '@mui/material/Box'
+import Chip from '@mui/material/Chip'
+import Stack from '@mui/material/Stack'
 import Grid from '@mui/material/Grid'
 import AlternateEmail from '@mui/icons-material/AlternateEmail'
 import PhoneIcon from '@mui/icons-material/Phone'
@@ -60,13 +63,13 @@ function PortfolioView() {
             { loading==false && <>
 
                 <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6}>
                         <div className='icon-info icon-text'><PhoneIcon /> <span>{portfolio.Number}</span></div>
                         <div className='icon-info icon-text'><AlternateEmail /> <span>{portfolio.Email}</span></div>
                         <div className='icon-info icon-text'><LocationOnIcon /> <span>{portfolio.Address}</span></div>
                         <div className='icon-info icon-text'><Link /> <span>{portfolio.Website}</span></div>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6}>
                         <div className='icon-info icon-text'><Facebook /> <span>{portfolio.Facebook}</span></div>
                         <div className='icon-info icon-text'><Instagram /> <span>{portfolio.Instagram}</span></div>
                         <div className='icon-info icon-text'><Twitter /> <span>{portfolio.Twitter}</span></div>
@@ -74,14 +77,19 @@ function PortfolioView() {
                     </Grid>
                 </Grid>
 
-                <div className='primary-services'>
-                    <label>Primary services: </label>
-                    {portfolio.PrimaryServices.map((service) => (<span>{service}</span>))}
-                </div>
-                <div className='secondary-services'>
-                    <label>Secondary services: </label>
-                    {portfolio.SecondaryServices.map((service) => (<span>{service}</span>))}
-                </div>
+                <Box sx={{ mt: 4, mb: 2 }}>
+                    <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
+                        <Chip label='Primary services' variant='outlined' color='primary' size='small' />
+                        {portfolio.PrimaryServices.map((service) => (<Chip label={service} color='primary' size='small' />))}
+                    </Stack>
+                </Box>
+
+                <Box>
+                    <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
+                        <Chip label='Secondary services' variant='outlined' color='secondary' size='small' />
+                        {portfolio.SecondaryServices.map((service) => (<Chip label={service} color='secondary' size='small' />))}
+                    </Stack>
+                </Box>
 
                 <h2>Company description</h2>
                 <p>{portfolio.BusinessDescriptionQuestion}</p>

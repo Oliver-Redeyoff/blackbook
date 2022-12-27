@@ -1,6 +1,10 @@
 import '../css/SearchView.css'
 
 import { NavLink } from "react-router-dom"
+import Box from '@mui/material/Box'
+import Chip from '@mui/material/Chip'
+import Stack from '@mui/material/Stack'
+
 import Loader from './Loader'
 
 import { useEffect, useState } from 'react'
@@ -49,15 +53,23 @@ function SearchView() {
       {portfolios.map((portfolio, index) => (
         <NavLink key={portfolio.CompanyName} to={'/search/'+portfolio.CompanyName}>
           <div className='portfolio-preview appear' style={{'animationDelay': 0.2 + index*0.03 + 's'}}>
+            
             <div className='name'>{portfolio.CompanyName}</div>
-            <div className='primary-services'>
-              <label>Primary services: </label>
-              {portfolio.PrimaryServices.map((service) => (<span>{service}</span>))}
-            </div>
-            <div className='secondary-services'>
-              <label>Secondary services: </label>
-              {portfolio.SecondaryServices.map((service) => (<span>{service}</span>))}
-            </div>
+
+            <Box sx={{ mb: 2 }}>
+              <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
+                <Chip label='Primary services' variant='outlined' color='primary' size='small' />
+                {portfolio.PrimaryServices.map((service) => (<Chip label={service} color='primary' size='small' />))}
+              </Stack>
+            </Box>
+
+            <Box>
+              <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
+                <Chip label='Secondary services' variant='outlined' color='secondary' size='small' />
+                {portfolio.SecondaryServices.map((service) => (<Chip label={service} color='secondary' size='small' />))}
+              </Stack>
+            </Box>
+
           </div>
         </NavLink>
       ))}

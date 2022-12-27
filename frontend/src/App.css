@@ -14,16 +14,22 @@
   vertical-align: super;
 }
 
+body {
+  overflow: hidden;
+}
+
 
 .app {
+  --horizontal-margin: 10%;
   display: flex;
   flex-flow: column;
   height: 100%;
 }
 
+
 .header {
   --title-width: 400px;
-  --horizontal-margin: 100px;
+  z-index: 100;
   flex: 0 1 auto;
   position: relative;
   top: 0px;
@@ -40,31 +46,103 @@
   left: var(--horizontal-margin);
   transform: translateY(-50%);
   margin: 0px;
-  font-size: 18px;
 }
 
-.header-sections {
-  position: absolute;
-  left: calc(var(--horizontal-margin) + var(--title-width));
-  right: var(--horizontal-margin);
-  top: 50%;
-  transform: translateY(-50%);
+@media (max-width: 999px) {
+  
+  .app {
+    --horizontal-margin: 50px;
+  }
+
+  .header {
+    --title-width: 150px;
+  }
+
+  .header-title {
+    font-size: 14px;
+  }
+
+  .open-sections-button {
+    position: absolute;
+    right: var(--horizontal-margin);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .close-sections-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .header-sections {
+    position: absolute;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.2s;
+    padding-top: 75px;
+  }
+  .header-sections.closed {
+    right: -200px;
+  }
+  .header-sections.open {
+    right: 0px;
+  }
+
+  .section {
+    margin-bottom: 5px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    cursor: pointer;
+  }
+  .section:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
 }
-.header-sections div {
-  float: right;
-  padding: 8px 10px;
-  margin-left: 20px;
-  transition: all 0.3s;
-  cursor: pointer;
-  color: black;
+
+@media (min-width: 1000px) {
+
+  .header-title {
+    font-size: 18px;
+  }
+
+  .open-sections-button {
+    display: none;
+  }
+
+  .close-sections-button {
+    display: none;
+  }
+
+  .header-sections {
+    position: absolute;
+    left: calc(var(--horizontal-margin) + var(--title-width));
+    right: var(--horizontal-margin);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .header-sections .section {
+    float: right;
+    padding: 8px 10px;
+    margin-left: 20px;
+    transition: all 0.3s;
+    cursor: pointer;
+    color: black;
+  }
+  .header-sections .section:hover {
+    background-color: #0000001b;
+  }
+  .header-sections .section.selected {
+    background-color: black;
+    color: white;
+  }
+
 }
-.header-sections div:hover {
-  background-color: #0000001b;
-}
-.header-sections div.selected {
-  background-color: black;
-  color: white;
-}
+
 
 .view-container {
   position: absolute;
@@ -75,5 +153,5 @@
 }
 
 .view {
-  padding: 40px 10% 50px 10%;
+  padding: 40px var(--horizontal-margin) 50px var(--horizontal-margin);
 }
