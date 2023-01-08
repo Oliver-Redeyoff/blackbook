@@ -6,11 +6,12 @@ import Menu from '@mui/icons-material/Menu'
 import Close from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 
-import HomeView from './components/HomeView'
-import PortfolioForm from './components/PorfolioForm'
-import SearchView from './components/SearchView'
-import PortfolioView from './components/PortfolioView'
-import AboutView from './components/AboutView'
+import HomeView from './components/views/HomeView'
+import PortfolioForm from './components/views/SignUpView'
+import SearchView from './components/views/SearchView'
+import PortfolioView from './components/views/PortfolioView'
+import AboutView from './components/views/AboutView'
+import AdminView from './components/views/AdminView'
 
 import { useEffect, useState } from 'react'
 
@@ -106,6 +107,9 @@ function App() {
 
           {/* Route for specific portfolio */}
           <Route path='/search/:CompanyName' element={<div className='view'><PortfolioView /></div>} />
+
+          {/* Route for admin view */}
+          <Route path='/admin' element={<div className='view'><AdminView /></div>} />
 
           {/* Add catch all route */}
           <Route path='*' element={<Navigate to="/home" />} />

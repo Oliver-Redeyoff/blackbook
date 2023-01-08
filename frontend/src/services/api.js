@@ -11,6 +11,6 @@ function post(endpoint, data) {
 }
 
 export default {
-    getAllPortfolios: () => {return get('GetPortfolios')},
+    getAllPortfolios: (is_admin=false, password='') => {return post('GetPortfolios', {'is_admin': is_admin, 'password': password})},
     postPortfolio: (portfolio) => {return post('PostPortfolio', portfolio)}
 }

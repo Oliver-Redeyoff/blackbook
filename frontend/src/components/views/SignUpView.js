@@ -1,4 +1,4 @@
-import '../css/PortfolioForm.css'
+import '../../css/PortfolioForm.css'
 
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
@@ -6,12 +6,12 @@ import Radio from '@mui/material/Radio'
 import Button from '@mui/material/Button'
 import Upload from '@mui/icons-material/Upload'
 
-import Loader from './Loader'
+import Loader from '../misc/Loader'
 
 import { useEffect, useState } from 'react'
 
-import formValidator from '../services/formValidator'
-import api from '../services/api'
+import formValidator from '../../services/formValidator'
+import api from '../../services/api'
 
 function PortfolioForm() {
 

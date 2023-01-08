@@ -1,4 +1,4 @@
-import '../css/PortfolioView.css'
+import '../../css/PortfolioView.css'
 
 import { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
@@ -16,9 +16,9 @@ import Twitter from '@mui/icons-material/Twitter'
 import Linkedin from '@mui/icons-material/LinkedIn'
 import Link from '@mui/icons-material/Link'
 
-import Loader from './Loader'
+import Loader from '../misc/Loader'
 
-import api from '../services/api'
+import api from '../../services/api'
 
 function PortfolioView() {
 
@@ -64,16 +64,16 @@ function PortfolioView() {
 
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                        <div className='icon-info icon-text'><PhoneIcon /> <span>{portfolio.Number}</span></div>
-                        <div className='icon-info icon-text'><AlternateEmail /> <span>{portfolio.Email}</span></div>
-                        <div className='icon-info icon-text'><LocationOnIcon /> <span>{portfolio.Address}</span></div>
-                        <div className='icon-info icon-text'><Link /> <span>{portfolio.Website}</span></div>
+                        {portfolio.Number!='' && <div className='icon-info icon-text'><PhoneIcon /> <span>{portfolio.Number}</span></div>}
+                        {portfolio.Email!='' && <div className='icon-info icon-text'><AlternateEmail /> <span>{portfolio.Email}</span></div>}
+                        {portfolio.Address!='' && <div className='icon-info icon-text'><LocationOnIcon /> <span>{portfolio.Address}</span></div>}
+                        {portfolio.Website!='' && <div className='icon-info icon-text'><Link /> <span>{portfolio.Website}</span></div>}
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <div className='icon-info icon-text'><Facebook /> <span>{portfolio.Facebook}</span></div>
-                        <div className='icon-info icon-text'><Instagram /> <span>{portfolio.Instagram}</span></div>
-                        <div className='icon-info icon-text'><Twitter /> <span>{portfolio.Twitter}</span></div>
-                        <div className='icon-info icon-text'><Linkedin /> <span>{portfolio.Linkedin}</span></div>
+                        {portfolio.Facebook!='' && <div className='icon-info icon-text'><Facebook /> <span>{portfolio.Facebook}</span></div>}
+                        {portfolio.Instagram!='' && <div className='icon-info icon-text'><Instagram /> <span>{portfolio.Instagram}</span></div>}
+                        {portfolio.Twitter!='' && <div className='icon-info icon-text'><Twitter /> <span>{portfolio.Twitter}</span></div>}
+                        {portfolio.Linkedin!='' && <div className='icon-info icon-text'><Linkedin /> <span>{portfolio.Linkedin}</span></div>}
                     </Grid>
                 </Grid>
 
