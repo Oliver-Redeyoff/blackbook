@@ -233,11 +233,11 @@ function PortfolioForm() {
           <Grid item xs={4}>Primary</Grid>
           <Grid item xs={4}>Secondary</Grid>
 
-          {services.map((service) => (<>
+          {services.map((service) => (<Grid key={service} container>
             <Grid item xs={4}>{service}</Grid>
             <Grid item xs={4}><Radio checked={portfolioForm.Services.value[service] == ServiceLevels.Primary} onClick={() => {updateService(service, ServiceLevels.Primary)}} /></Grid>
             <Grid item xs={4}><Radio checked={portfolioForm.Services.value[service] == ServiceLevels.Secondary} onClick={() => {updateService(service, ServiceLevels.Secondary)}}/></Grid>
-          </>))}
+          </Grid>))}
           
           <Grid item xs={12}></Grid>
           <Grid item xs={12}>

@@ -25,12 +25,12 @@ export default function PasswordModal(props) {
 
     function submit() {
         props.successCallback(password)
+        setPassword('')
         props.closeModal()
     }
 
     return (
         <div>
-        {/* <Button onClick={handleOpen}>Open modal</Button> */}
         <Modal
             open={props.show}
             onClose={props.closeModal}
@@ -38,7 +38,7 @@ export default function PasswordModal(props) {
             <Box sx={{ ...style, width: 400 }}>
                 <h2 id="modal-title">Admin password</h2>
 
-                <TextField fullWidth value={password} type='password' size='small' onChange={(e) => {setPassword(e.target.value)}} />
+                <TextField fullWidth autoFocus value={password} type='password' size='small' onChange={(e) => {setPassword(e.target.value)}} />
 
                 <Button variant='contained' style={{marginTop: '20px'}} onClick={submit}>Submit</Button>
             </Box>

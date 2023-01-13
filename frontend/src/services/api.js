@@ -18,6 +18,7 @@ export default {
                 'Content-Type': 'multipart/form-data'
             }
         })
-    }
+    },
+    approvePortfolio: (portfolio, password) => {return post('ApprovePortfolio', {'portfolio': portfolio, 'password': password})}
 
 }

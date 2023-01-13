@@ -63,7 +63,7 @@ def post_portfolio(request):
     portfolio['LogoUrl'] = 'https://storage.googleapis.com/blackbook-portfolio-files/' + logo_file_name
 
     # insert new Portfolio
-    datastore_portfolio = datastore.Entity(key=client.key("Portfolio"))
+    datastore_portfolio = datastore.Entity(key=client.key("Portfolio", portfolio['CompanyName']))
     datastore_portfolio.update(portfolio)
     client.put(datastore_portfolio)
     
