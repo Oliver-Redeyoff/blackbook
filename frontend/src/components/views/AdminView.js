@@ -32,7 +32,7 @@ function AdminView() {
       { loading==true && <div style={{'textAlign': 'center', 'marginTop': '10%'}}><Loader /></div> }
 
       {portfolios.map((portfolio, index) => (
-        <NavLink key={portfolio.CompanyName} to={'/search/'+portfolio.CompanyName}>
+        <NavLink key={portfolio.CompanyName} to={'/admin/'+portfolio.CompanyName}>
           <div className='appear' style={{'animationDelay': 0.2 + index*0.03 + 's'}}>
             <PortfolioPreview portfolio={portfolio} />
           </div>

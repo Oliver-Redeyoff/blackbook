@@ -19,16 +19,17 @@ import Link from '@mui/icons-material/Link'
 import Loader from '../misc/Loader'
 
 import api from '../../services/api'
+import { Button } from '@mui/material'
 
-function PortfolioView() {
+function PortfolioView(props) {
 
     var params = useParams()
     const [loading, setLoading] = useState(true)
-    const [portfolio, setPortfolio] = useState({})
+    const [portfolio, setPortfolio] = useState(null)
 
 
     useEffect(() => {
-        api.getAllPortfolios()
+        api.getAllPortfolios(props.isAdmin, 'password123')
           .then((res) => {
             var portfolios = res.data.res
             for (var portfolioIndex in portfolios) {
@@ -48,6 +49,8 @@ function PortfolioView() {
     
             }
             
+            console.log(portfolios)
+            console.log(params)
             setPortfolio(portfolios.filter((el) => {return el.CompanyName == params.CompanyName})[0])
             setLoading(false)
         })
@@ -56,11 +59,19 @@ function PortfolioView() {
 
     return (
         <div className='portfolio appear'>
+
+            { props.isAdmin && <div class='admin-bar'>
+                <div className='label'>Admin options</div>
+                <div className='options'>
+                    <Button variant='contained'>Approve</Button>
+                </div>
+            </div> }
+
             <h1>{params.CompanyName}</h1>
 
             { loading==true && <div style={{'textAlign': 'center', 'marginTop': '10%'}}><Loader /></div> }
 
-            { loading==false && <>
+            { portfolio != null && <>
 
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -80,14 +91,14 @@ function PortfolioView() {
                 <Box sx={{ mt: 4, mb: 2 }}>
                     <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
                         <Chip label='Primary services' variant='outlined' color='primary' size='small' />
-                        {portfolio.PrimaryServices.map((service) => (<Chip label={service} color='primary' size='small' />))}
+                        {portfolio.PrimaryServices.map((service) => (<Chip key={service} label={service} color='primary' size='small' />))}
                     </Stack>
                 </Box>
 
                 <Box>
                     <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
                         <Chip label='Secondary services' variant='outlined' color='secondary' size='small' />
-                        {portfolio.SecondaryServices.map((service) => (<Chip label={service} color='secondary' size='small' />))}
+                        {portfolio.SecondaryServices.map((service) => (<Chip key={service} label={service} color='secondary' size='small' />))}
                     </Stack>
                 </Box>
 

@@ -39,14 +39,14 @@ function PortfolioPreview(props) {
             <Box sx={{ mb: 2 }}>
                 <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
                     <Chip label='Primary services' variant='outlined' color='primary' size='small' />
-                    {primaryServices.map((service) => (<Chip label={service} color='primary' size='small' />))}
+                    {primaryServices.map((service) => (<Chip key={service} label={service} color='primary' size='small' />))}
                 </Stack>
             </Box>
 
             <Box>
                 <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
                     <Chip label='Secondary services' variant='outlined' color='secondary' size='small' />
-                    {secondaryServices.map((service) => (<Chip label={service} color='secondary' size='small' />))}
+                    {secondaryServices.map((service) => (<Chip key={service} label={service} color='secondary' size='small' />))}
                 </Stack>
             </Box>
 

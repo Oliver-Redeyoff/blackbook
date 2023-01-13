@@ -1,4 +1,4 @@
-import '../../css/PortfolioForm.css'
+import '../../css/SignUpView.css'
 
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
@@ -20,8 +20,8 @@ function PortfolioForm() {
     Secondary: 'Secondary'
   }
   var formSchema = new formValidator({
-    Name: {
-      label: 'Name',
+    CompanyName: {
+      label: 'Company name',
       initialValue: '',
       validation: notEmpty,
       errorMessage: 'Cannot be empty'
@@ -32,20 +32,14 @@ function PortfolioForm() {
       validation: notEmpty,
       errorMessage: 'Cannot be empty'
     },
-    CompanyName: {
-      label: 'Company name',
+    PhoneNumber: {
+      label: 'Phone Number',
       initialValue: '',
       validation: notEmpty,
       errorMessage: 'Cannot be empty'
     },
-    Number: {
-      label: 'Number',
-      initialValue: '',
-      validation: notEmpty,
-      errorMessage: 'Cannot be empty'
-    },
-    Address: {
-      label: 'Address',
+    Town: {
+      label: 'Town',
       initialValue: '',
       validation: notEmpty,
       errorMessage: 'Cannot be empty'
@@ -92,6 +86,7 @@ function PortfolioForm() {
 
 
   const [portfolioForm, setPortfolioForm] = useState(formSchema.generateInitialForm())
+  const [logo, setLogo] = useState(null)
   const [services, setServices] = useState([
     'Graphic Design', 'Photography', 'Illustration', 
     'Copywriting', 'Social media', 'Music', 'Website design', 
@@ -159,8 +154,12 @@ function PortfolioForm() {
       return
     }
 
-    var portfolioDict = formSchema.generateValuesDict(portfolioFormCopy)
-    api.postPortfolio(portfolioDict)
+    const portfolioFormData = new FormData()
+    portfolioFormData.append('logo.png', logo)
+    var portfolioString = JSON.stringify(formSchema.generateValuesDict(portfolioFormCopy))
+    portfolioFormData.append('portfolio', portfolioString)
+    
+    api.postPortfolio(portfolioFormData)
       .finally(() => {
         setSubmitLoading(false)
         setSubmitted(true)
@@ -171,92 +170,110 @@ function PortfolioForm() {
   return (
     <div className='portfolio-form'>
 
-      <h1>Sign up to have your creative business listed</h1>
+      {submitted == true && <>
+        <h2>Submitted</h2>
+        <p>Thank you for signing up! We will review your profile shortly and if there are no 
+          issues we will approve it and display it on our search page.</p>
+      </>}
 
-      <h2>Basic info</h2>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          {generateTextInput('Name')}
-        </Grid>
-        <Grid item xs={6}>
-          {generateTextInput('Email')}
-        </Grid>
-        <Grid item xs={6}>
-          {generateTextInput('CompanyName')}
-        </Grid>
-        <Grid item xs={6}>
-          {generateTextInput('Number')}
-        </Grid>
-        <Grid item xs={12}>
-          {generateTextInput('Address', true)}
-        </Grid>
-      </Grid>
+      {submitted == false && <>
 
-      <h2>Social links</h2>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          {generateTextInput('Website')}
-        </Grid>
-        <Grid item xs={6}>
-          {generateTextInput('Facebook')}
-        </Grid>
-        <Grid item xs={6}>
-          {generateTextInput('Twitter')}
-        </Grid>
-        <Grid item xs={6}>
-          {generateTextInput('Instagram')}
-        </Grid>
-        <Grid item xs={6}>
-          {generateTextInput('Linkedin')}
-        </Grid>
-      </Grid>
+        <h1>Sign up to have your creative business listed</h1>
 
-      <h2>Services</h2>
-      <Grid container spacing={2}>
-
-        <Grid item xs={4}></Grid>
-        <Grid item xs={4}>Primary</Grid>
-        <Grid item xs={4}>Secondary</Grid>
-
-        {services.map((service) => (<>
-          <Grid item xs={4}>{service}</Grid>
-          <Grid item xs={4}><Radio checked={portfolioForm.Services.value[service] == ServiceLevels.Primary} onClick={() => {updateService(service, ServiceLevels.Primary)}} /></Grid>
-          <Grid item xs={4}><Radio checked={portfolioForm.Services.value[service] == ServiceLevels.Secondary} onClick={() => {updateService(service, ServiceLevels.Secondary)}}/></Grid>
-        </>))}
-        
-        <Grid item xs={12}></Grid>
-        <Grid item xs={12}>
-          <span><b>Add a service:</b></span>
-          <TextField value={newService} id="outlined-basic" style={{'margin': '0px 20px 0px 20px'}} size='small' onChange={(e) => {setNewService(e.target.value)}} />
-          <Button variant='contained' onClick={addNewService}>Add</Button>
+        <h2>Basic info</h2>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <div className='logo-upload'>
+              <div className='logo-preview-container'>
+                <img className='logo-preview' src={logo==null ? '' : URL.createObjectURL(logo)} />
+              </div>
+              <Button className='upload-button' variant='contained'>
+                <input type="file" accept='.png' onChange={(e) => {setLogo(e.target.files[0])}}/>
+                <Upload /> <span>Upload logo</span>
+              </Button>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('CompanyName')}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('Email')}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('PhoneNumber')}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('Town')}
+          </Grid>
         </Grid>
 
-      </Grid>
-
-      <h2>Business info</h2>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <h3>Tell us about yourself and your business (no more than 1500 characters)</h3>
-          {generateTextInput('BusinessDescriptionQuestion', true)}
+        <h2>Social links</h2>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('Website')}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('Facebook')}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('Twitter')}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('Instagram')}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            {generateTextInput('Linkedin')}
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <h3>Please let us know who you've previously worked with or what types of businesses you've worked with (no more than 1500 characters)</h3>
-          {generateTextInput('PreviousWorkQuestion', true)}
-        </Grid>
-      </Grid>
 
-      <h2>Work samples</h2>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <div className='form-upload icon-text'><Upload /> <span>Upload any work samples</span></div>
-        </Grid>
-      </Grid>
+        <h2>Services</h2>
+        <Grid container spacing={2}>
 
-      <Button style={{'marginTop': '60px'}} variant='contained' disabled={submitted || submitLoading} onClick={submit} disableElevation>
-        { submitLoading==true ? <Loader color='white' /> : (
-          submitted==true ? 'Submitted!' : 'Submit'
-        ) }
-      </Button>
+          <Grid item xs={4}></Grid>
+          <Grid item xs={4}>Primary</Grid>
+          <Grid item xs={4}>Secondary</Grid>
+
+          {services.map((service) => (<>
+            <Grid item xs={4}>{service}</Grid>
+            <Grid item xs={4}><Radio checked={portfolioForm.Services.value[service] == ServiceLevels.Primary} onClick={() => {updateService(service, ServiceLevels.Primary)}} /></Grid>
+            <Grid item xs={4}><Radio checked={portfolioForm.Services.value[service] == ServiceLevels.Secondary} onClick={() => {updateService(service, ServiceLevels.Secondary)}}/></Grid>
+          </>))}
+          
+          <Grid item xs={12}></Grid>
+          <Grid item xs={12}>
+            <span><b>Add a service:</b></span>
+            <TextField value={newService} id="outlined-basic" style={{'margin': '0px 20px 0px 20px'}} size='small' onChange={(e) => {setNewService(e.target.value)}} />
+            <Button variant='contained' onClick={addNewService}>Add</Button>
+          </Grid>
+
+        </Grid>
+
+        <h2>Business info</h2>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <h3>Tell us about yourself and your business (no more than 1500 characters)</h3>
+            {generateTextInput('BusinessDescriptionQuestion', true)}
+          </Grid>
+          <Grid item xs={12}>
+            <h3>Please let us know who you've previously worked with or what types of businesses you've worked with (no more than 1500 characters)</h3>
+            {generateTextInput('PreviousWorkQuestion', true)}
+          </Grid>
+        </Grid>
+
+        <h2>Work samples</h2>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <div className='document-upload'>
+              <div className='form-upload icon-text'><Upload /> <span>Upload any work samples</span></div>
+            </div>
+          </Grid>
+        </Grid>
+
+        <Button style={{'marginTop': '60px'}} variant='contained' disabled={submitted || submitLoading} onClick={submit} disableElevation>
+          { submitLoading==true ? <Loader color='white' /> : 'Submit' }
+        </Button>
+
+      </> }
 
     </div>
   )

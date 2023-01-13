@@ -4,6 +4,7 @@ import { useLocation, useNavigate, NavLink, Routes, Route, Navigate } from "reac
 
 import Menu from '@mui/icons-material/Menu'
 import Close from '@mui/icons-material/Close'
+import Modal from '@mui/material/Modal'
 import IconButton from '@mui/material/IconButton'
 
 import HomeView from './components/views/HomeView'
@@ -12,6 +13,7 @@ import SearchView from './components/views/SearchView'
 import PortfolioView from './components/views/PortfolioView'
 import AboutView from './components/views/AboutView'
 import AdminView from './components/views/AdminView'
+import PasswordModal from './components/misc/PasswordModal'
 
 import { useEffect, useState } from 'react'
 
@@ -47,6 +49,8 @@ function App() {
 
   const [section, setSection] = useState('')
   const [showSections, setShowSections] = useState(false)
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
+  const [passwordModalCallback, setPasswordModalCallback] = useState({'callback': () => {}})
   let location = useLocation()
   let navigate = useNavigate()
 
@@ -58,10 +62,19 @@ function App() {
       }
     }
   }, [location])
+
+
+  function passwordProtect(callback) {
+    setShowPasswordModal(true)
+    setPasswordModalCallback({'callback': callback})
+  }
   
 
   return (
     <div className='app'>
+
+      {/* modals */}
+      <PasswordModal show={showPasswordModal} successCallback={passwordModalCallback['callback']} closeModal={() => {setShowPasswordModal(false)}} />
 
       {/* header */}
       <div className='header'>
@@ -85,7 +98,7 @@ function App() {
           </div>
 
           {Object.keys(Sections).map((key) => (
-            <div className={'section' + (section==key ? ' selected' : '')}>
+            <div key={key} className={'section' + (section==key ? ' selected' : '')}>
               <NavLink key={Sections[key].id} to={Sections[key].path}>
                 <div onClick={() => {setShowSections(false); setSection(key)}}>{Sections[key].name}</div>
               </NavLink>
@@ -102,14 +115,17 @@ function App() {
           
           {/* Sepcify route for each section */}
           {Object.keys(Sections).map((key) => (
-            <Route path={Sections[key].path} element={<div className='view'>{Sections[key].viewComponent}</div>} />
+            <Route key={key} path={Sections[key].path} element={<div className='view'>{Sections[key].viewComponent}</div>} />
           ))}
 
           {/* Route for specific portfolio */}
-          <Route path='/search/:CompanyName' element={<div className='view'><PortfolioView /></div>} />
+          <Route path='/search/:CompanyName' element={<div className='view'><PortfolioView isAdmin={false} /></div>} />
 
           {/* Route for admin view */}
           <Route path='/admin' element={<div className='view'><AdminView /></div>} />
+
+          {/* Route for admin review of portfolio */}
+          <Route path='/admin/:CompanyName' element={<div className='view'><PortfolioView isAdmin={true} /></div>} />
 
           {/* Add catch all route */}
           <Route path='*' element={<Navigate to="/home" />} />

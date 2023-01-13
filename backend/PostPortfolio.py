@@ -1,17 +1,16 @@
+import json
 from google.cloud import datastore
+from google.cloud import storage
 
 # Instantiate client
 client = datastore.Client()
 
 def post_portfolio(request):
 
-    # retrieve request body
-    request_portfolio = request.get_json()
-    request_portfolio['approved'] = False
-
-    ## Set CORS headers for the preflight request
+    # set CORS headers for the preflight request
     if request.method == 'OPTIONS':
-        ## Allows GET requests from any origin with the Content-Type
+
+        # allows GET requests from any origin with the Content-Type
         headers = {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET',
@@ -21,18 +20,52 @@ def post_portfolio(request):
 
         return ('', 204, headers)
 
-    ## Set CORS headers for the main request
+    # set CORS headers for the main request
     headers = {
         'Access-Control-Allow-Origin': '*'
     }
 
-    # insert new Portfolio
-    portfolio = datastore.Entity(key=client.key("Portfolio"))
-    portfolio.update(request_portfolio)
-    client.put(portfolio)
-    
-    # retrieve Portfolios
-    query = client.query(kind="Portfolio")
+    # retrieve portfolio form from request
+    request_form = request.form.to_dict()
+    portfolio_string = request_form['portfolio']
+    portfolio = json.loads(portfolio_string)
+    print(portfolio)
 
-    # return list
-    return ({'res': list(query.fetch())}, 200, headers)
+    # retrieve logo from request and generate file name
+    request_files = request.files.to_dict()
+    logo_file = request_files['logo.png']
+    logo_file_extension = logo_file.name.split('.')[1]
+    logo_file_prefix = 'logo' + portfolio['CompanyName']
+    logo_file_name = logo_file_prefix + '.' + logo_file_extension
+
+    # retrieve storage bucket
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket('blackbook-portfolio-files')
+
+    # check if file name is taken and rename if it is
+    taken = True
+    blobs = storage_client.list_blobs('blackbook-portfolio-files')
+    blob_names = [blob.name for blob in blobs]
+    while taken:
+        if logo_file_name in blob_names:
+            logo_file_prefix += '1'
+            logo_file_name = logo_file_prefix + '.' + logo_file_extension
+        else:
+            taken = False
+
+    # upload file to storage
+    blob = bucket.blob(logo_file_name)
+    blob.upload_from_file(logo_file)
+
+
+    # update portfolio data
+    portfolio['Approved'] = False
+    portfolio['LogoUrl'] = 'https://storage.googleapis.com/blackbook-portfolio-files/' + logo_file_name
+
+    # insert new Portfolio
+    datastore_portfolio = datastore.Entity(key=client.key("Portfolio"))
+    datastore_portfolio.update(portfolio)
+    client.put(datastore_portfolio)
+    
+    # return 200 code
+    return ({'res': True}, 200, headers)
