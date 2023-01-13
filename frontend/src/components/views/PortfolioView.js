@@ -31,30 +31,37 @@ function PortfolioView(props) {
 
 
     useEffect(() => {
-        props.passwordProtect((password) => {
-            api.getAllPortfolios(props.isAdmin, password)
-            .then((res) => {
-                var portfolios = res.data.res
-                for (var portfolioIndex in portfolios) {
-                    var portfolio = portfolios[portfolioIndex]
-                    portfolio.PrimaryServices = []
-                    portfolio.SecondaryServices = []
-            
-                    var services = Object.keys(portfolio.Services)
-                    for (var service_index in services) {
-                        var service = services[service_index]
-                        if (portfolio.Services[service] == 'Primary') {
-                        portfolio.PrimaryServices.push(service)
-                        } else {
-                        portfolio.SecondaryServices.push(service)
-                        }
+        if (props.isAdmin == true) {
+            props.passwordProtect((password) => {setup(password)})
+        } else {
+            setup()
+        }
+    }, [])
+
+
+    function setup(password='') {
+        api.getAllPortfolios(props.isAdmin, password)
+        .then((res) => {
+            var portfolios = res.data.res
+            for (var portfolioIndex in portfolios) {
+                var portfolio = portfolios[portfolioIndex]
+                portfolio.PrimaryServices = []
+                portfolio.SecondaryServices = []
+        
+                var services = Object.keys(portfolio.Services)
+                for (var service_index in services) {
+                    var service = services[service_index]
+                    if (portfolio.Services[service] == 'Primary') {
+                    portfolio.PrimaryServices.push(service)
+                    } else {
+                    portfolio.SecondaryServices.push(service)
                     }
                 }
-                setPortfolio(portfolios.filter((el) => {return el.CompanyName == params.CompanyName})[0])
-                setLoading(false)
-            })
+            }
+            setPortfolio(portfolios.filter((el) => {return el.CompanyName == params.CompanyName})[0])
+            setLoading(false)
         })
-    }, [])
+    }
 
 
     function adminApprovePortfolio() {
@@ -77,11 +84,14 @@ function PortfolioView(props) {
                 </div>
             </div> }
 
-            <h1>{params.CompanyName}</h1>
+            <div className='portfolio-header'>
+                <div className='portfolio-logo'>{ portfolio != null && <img className='appear' src={portfolio.LogoUrl} /> }</div>
+                <div className='portfolio-name'>{params.CompanyName}</div>
+            </div>
 
             { loading==true && <div style={{'textAlign': 'center', 'marginTop': '10%'}}><Loader /></div> }
 
-            { portfolio != null && <>
+            { portfolio != null && <div className='appear'>
 
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -118,7 +128,7 @@ function PortfolioView(props) {
                 <h2>Previous work</h2>
                 <p>{portfolio.PreviousWorkQuestion}</p>
 
-            </> }
+            </div> }
         </div>
     )
 

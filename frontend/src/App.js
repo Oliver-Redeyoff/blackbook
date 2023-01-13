@@ -119,7 +119,7 @@ function App() {
           ))}
 
           {/* Route for specific portfolio */}
-          <Route path='/search/:CompanyName' element={<div className='view'><PortfolioView isAdmin={false} /></div>} />
+          <Route path='/search/:CompanyName' element={<div className='view'><PortfolioView isAdmin={false} passwordProtect={passwordProtect} /></div>} />
 
           {/* Route for admin view */}
           <Route path='/admin' element={<div className='view'><AdminView passwordProtect={passwordProtect} /></div>} />
