@@ -9,18 +9,20 @@ import { useEffect, useState } from 'react'
 
 import api from '../../services/api'
 
-function AdminView() {
+function AdminView(props) {
 
   const [portfolios, setPortfolios] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    api.getAllPortfolios(true, 'password123')
-      .then((res) => {
-        var portfolios = res.data.res
-        setPortfolios(portfolios)
-        setLoading(false)
-      })
+    props.passwordProtect((password) => {
+      api.getAllPortfolios(true, password)
+        .then((res) => {
+          var portfolios = res.data.res
+          setPortfolios(portfolios)
+          setLoading(false)
+        })
+    })
   }, [])
 
 

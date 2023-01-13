@@ -29,30 +29,30 @@ function PortfolioView(props) {
 
 
     useEffect(() => {
-        api.getAllPortfolios(props.isAdmin, 'password123')
-          .then((res) => {
-            var portfolios = res.data.res
-            for (var portfolioIndex in portfolios) {
-              var portfolio = portfolios[portfolioIndex]
-              portfolio.PrimaryServices = []
-              portfolio.SecondaryServices = []
-    
-              var services = Object.keys(portfolio.Services)
-              for (var service_index in services) {
-                var service = services[service_index]
-                if (portfolio.Services[service] == 'Primary') {
-                  portfolio.PrimaryServices.push(service)
-                } else {
-                  portfolio.SecondaryServices.push(service)
+        props.passwordProtect((password) => {
+            api.getAllPortfolios(props.isAdmin, password)
+            .then((res) => {
+                var portfolios = res.data.res
+                for (var portfolioIndex in portfolios) {
+                var portfolio = portfolios[portfolioIndex]
+                portfolio.PrimaryServices = []
+                portfolio.SecondaryServices = []
+        
+                var services = Object.keys(portfolio.Services)
+                for (var service_index in services) {
+                    var service = services[service_index]
+                    if (portfolio.Services[service] == 'Primary') {
+                    portfolio.PrimaryServices.push(service)
+                    } else {
+                    portfolio.SecondaryServices.push(service)
+                    }
                 }
-              }
-    
-            }
-            
-            console.log(portfolios)
-            console.log(params)
-            setPortfolio(portfolios.filter((el) => {return el.CompanyName == params.CompanyName})[0])
-            setLoading(false)
+        
+                }
+                
+                setPortfolio(portfolios.filter((el) => {return el.CompanyName == params.CompanyName})[0])
+                setLoading(false)
+            })
         })
     }, [])
 
@@ -60,7 +60,7 @@ function PortfolioView(props) {
     return (
         <div className='portfolio appear'>
 
-            { props.isAdmin && <div class='admin-bar'>
+            { props.isAdmin && <div className='admin-bar'>
                 <div className='label'>Admin options</div>
                 <div className='options'>
                     <Button variant='contained'>Approve</Button>

@@ -24,11 +24,8 @@ export default function PasswordModal(props) {
     const [password, setPassword] = useState('')
 
     function submit() {
-        if (password == 'password123') {
-            console.log(props.successCallback)
-            props.successCallback()
-            props.closeModal()
-        }
+        props.successCallback(password)
+        props.closeModal()
     }
 
     return (

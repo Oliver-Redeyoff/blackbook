@@ -122,10 +122,10 @@ function App() {
           <Route path='/search/:CompanyName' element={<div className='view'><PortfolioView isAdmin={false} /></div>} />
 
           {/* Route for admin view */}
-          <Route path='/admin' element={<div className='view'><AdminView /></div>} />
+          <Route path='/admin' element={<div className='view'><AdminView passwordProtect={passwordProtect} /></div>} />
 
           {/* Route for admin review of portfolio */}
-          <Route path='/admin/:CompanyName' element={<div className='view'><PortfolioView isAdmin={true} /></div>} />
+          <Route path='/admin/:CompanyName' element={<div className='view'><PortfolioView isAdmin={true} passwordProtect={passwordProtect} /></div>} />
 
           {/* Add catch all route */}
           <Route path='*' element={<Navigate to="/home" />} />
