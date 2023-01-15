@@ -1,9 +1,11 @@
 import '../../css/SearchView.css'
 
 import { NavLink } from "react-router-dom"
-import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
-import Stack from '@mui/material/Stack'
+import InputAdornment from '@mui/material/InputAdornment'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
+import SearchIcon from '@mui/icons-material/Search'
+import FilterAlt from '@mui/icons-material/FilterAlt'
 
 import Loader from '../misc/Loader'
 import PortfolioPreview from '../misc/PortfolioPreview'
@@ -14,8 +16,17 @@ import api from '../../services/api'
 
 function SearchView() {
 
+  const services = [
+    'Graphic Design', 'Photography', 'Illustration', 
+    'Copywriting', 'Social media', 'Music', 'Website design', 
+    'Website building', 'Legal advice', 'Financial advice'
+  ]
+
+
   const [portfolios, setPortfolios] = useState([])
+  const [filteredPortfolios, setFilteredPortfolios] = useState([])
   const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
     api.getAllPortfolios()
@@ -47,7 +58,45 @@ function SearchView() {
   return (
     <div className='search-view'>
 
-      <h1 className='appear'>All creatives:</h1>
+      <div className='filters'>
+
+        <TextField
+          label='Search by name'
+          size='small'
+          InputProps={{
+            startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
+          }}
+        />
+
+        <Autocomplete
+          multiple
+          sx={{ display: 'inline-block', ml: 2, width: 300 }}
+          size='small'
+          options={services}
+          getOptionLabel={option => option}
+          renderInput={params => {
+            return (
+              <TextField
+                {...params}
+                label="Filter by service"
+                fullWidth
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: (
+                    <>
+                      <InputAdornment position="start">
+                        <FilterAlt />
+                      </InputAdornment>
+                      {params.InputProps.startAdornment}
+                    </>
+                  )
+                }}
+              />
+            );
+          }}
+        />
+
+      </div>
 
       { loading==true && <div style={{'textAlign': 'center', 'marginTop': '10%'}}><Loader /></div> }
 
