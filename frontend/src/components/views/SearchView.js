@@ -60,7 +60,25 @@ function SearchView() {
   }, [])
 
   useEffect(() => {
-    console.log(filters)
+    
+    var newFilteredPortfolios = [...portfolios]
+
+    // filter by name
+    if (filters.name != '') {
+      newFilteredPortfolios = newFilteredPortfolios.filter((portfolio) => {
+        return portfolio.CompanyName.toLowerCase().includes(filters.name.toLowerCase())
+      })
+    }
+
+    // filter by service
+    for (var filterService of filters.services) {
+      newFilteredPortfolios = newFilteredPortfolios.filter((portfolio) => {
+        return Object.keys(portfolio.Services).includes(filterService)
+      })
+    }
+
+    setFilteredPortfolios(newFilteredPortfolios)
+
   }, [filters])
 
 
