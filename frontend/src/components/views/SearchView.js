@@ -26,6 +26,10 @@ function SearchView() {
   const [portfolios, setPortfolios] = useState([])
   const [filteredPortfolios, setFilteredPortfolios] = useState([])
   const [loading, setLoading] = useState(true)
+  const [filters, setFilters] = useState({
+    'name': '',
+    'services': []
+  })
 
 
   useEffect(() => {
@@ -50,9 +54,14 @@ function SearchView() {
         }
 
         setPortfolios(portfolios)
+        setFilteredPortfolios(portfolios)
         setLoading(false)
       })
   }, [])
+
+  useEffect(() => {
+    console.log(filters)
+  }, [filters])
 
 
   return (
@@ -66,6 +75,7 @@ function SearchView() {
           InputProps={{
             startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
           }}
+          onChange={(e) => {setFilters({...filters, 'name': e.target.value})}}
         />
 
         <Autocomplete
@@ -74,6 +84,9 @@ function SearchView() {
           size='small'
           options={services}
           getOptionLabel={option => option}
+          onChange={(event, newServices) => {
+            setFilters({...filters, 'services': newServices})
+          }}
           renderInput={params => {
             return (
               <TextField
@@ -100,7 +113,7 @@ function SearchView() {
 
       { loading==true && <div style={{'textAlign': 'center', 'marginTop': '10%'}}><Loader /></div> }
 
-      {portfolios.map((portfolio, index) => (
+      {filteredPortfolios.map((portfolio, index) => (
         <NavLink key={portfolio.CompanyName} to={'/search/'+portfolio.CompanyName}>
           <div className='appear' style={{'animationDelay': 0.2 + index*0.03 + 's'}}>
             <PortfolioPreview portfolio={portfolio} />
