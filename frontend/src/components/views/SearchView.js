@@ -16,16 +16,10 @@ import api from '../../services/api'
 
 function SearchView() {
 
-  const services = [
-    'Graphic Design', 'Photography', 'Illustration', 
-    'Copywriting', 'Social media', 'Music', 'Website design', 
-    'Website building', 'Legal advice', 'Financial advice'
-  ]
-
-
+  const [loading, setLoading] = useState(true)
   const [portfolios, setPortfolios] = useState([])
   const [filteredPortfolios, setFilteredPortfolios] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [services, setServices] = useState([])
   const [filters, setFilters] = useState({
     'name': '',
     'services': []
@@ -35,7 +29,10 @@ function SearchView() {
   useEffect(() => {
     api.getAllPortfolios()
       .then((res) => {
+
         var portfolios = res.data.res
+        var servicesSet = new Set()
+
         for (var portfolioIndex in portfolios) {
           var portfolio = portfolios[portfolioIndex]
           portfolio.PrimaryServices = []
@@ -44,6 +41,7 @@ function SearchView() {
           var services = Object.keys(portfolio.Services)
           for (var service_index in services) {
             var service = services[service_index]
+            servicesSet.add(service)
             if (portfolio.Services[service] == 'Primary') {
               portfolio.PrimaryServices.push(service)
             } else {
@@ -55,6 +53,7 @@ function SearchView() {
 
         setPortfolios(portfolios)
         setFilteredPortfolios(portfolios)
+        setServices(Array.from(servicesSet))
         setLoading(false)
       })
   }, [])
